@@ -25,4 +25,4 @@ jobs:
           aws-region: ${{ secrets.S3_BUCKET_REGION }}
       - name: Copy files to S3 with the AWS CLI
         run: |
-          aws s3 sync ./out s3://my-frontend-build/
+          aws s3 sync ./dist s3://my-frontend-build/
