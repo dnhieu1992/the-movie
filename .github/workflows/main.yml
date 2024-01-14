@@ -1,24 +1,28 @@
-name: Node.js CI
+name: Development
 
 on:
   push:
-    branches:
-      - "main"
+    branches: [main]
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: v18.12.1
+          node-version: "18.x"
           cache: "npm"
-      - run: npm install
-      - run: npm run build
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_SECRET_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: ${{ secrets.S3_BUCKET_REGION }}
+      - name: Copy files to S3 with the AWS CLI
+        run: |
+          aws s3 sync ./out s3://my-frontend-build/
