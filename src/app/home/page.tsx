@@ -38,7 +38,7 @@ const Home = async () => {
         style={{ backgroundImage: `url(${trendingBg.src})` }}
       >
         <div className={styles.header}>
-          <h3>Trending</h3>
+          <h3>Trending test ci cd</h3>
           <div className={styles.slideButton}>
             <button
               className={clsx(styles.today, {
